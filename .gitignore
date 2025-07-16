@@ -1,0 +1,61 @@
+# ───────────── Root & Shared ─────────────
+.DS_Store
+*.log
+*.pem
+*.tsbuildinfo
+*.swp
+*.sublime-*
+
+# IDE/Editor configs
+.vscode/
+.idea/
+
+# ───────────── Vite Frontend ─────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+frontend/.vite/*
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Lockfiles
+frontend/package-lock.json
+frontend/yarn.lock
+frontend/pnpm-lock.yaml
+
+# ───────────── Backend (Python) ─────────────
+backend/__pycache__/
+backend/.env
+backend/.env.*
+*.py[cod]
+*.sqlite3
+
+# ───────────── Node Root ─────────────
+node_modules/
+.pnpm-debug.log
+yarn-error.log
+npm-debug.log
+.pnp
+.pnp.*
+
+# ───────────── Test Coverage ─────────────
+coverage/
+frontend/coverage/
+
+# ───────────── Deployment ─────────────
+.vercel/
+.netlify/
+frontend/.vercel
+frontend/.netlify
+
+# ───────────── Git ─────────────
+*.orig
+*.rej
+
+# ───────────── Env Files ─────────────
+.env
+.env.*
+.env.local
+frontend/.env
