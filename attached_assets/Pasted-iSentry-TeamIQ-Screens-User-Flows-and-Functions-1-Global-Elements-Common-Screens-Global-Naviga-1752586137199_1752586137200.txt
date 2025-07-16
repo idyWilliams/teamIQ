@@ -1,0 +1,439 @@
+iSentry TeamIQ: Screens, User Flows, and Functions
+1. Global Elements & Common Screens
+Global Navigation Elements (Visible on most authenticated screens):
+A. Main Sidebar Navigation:
+Logo/Home Link (to role-specific dashboard)
+Navigation Items (dynamic based on role, e.g., "My Dashboard," "Team View," "Projects," "Analytics," "Settings," "Admin Panel")
+User Profile Icon (links to User Profile/Settings)
+Logout Button
+B. Top Header Bar:
+Global Search Bar (Future: search users, projects, skills)
+Notification Bell Icon (with unread count)
+Help/Documentation Link (?)
+Common Screens (Accessible to most/all authenticated users, with variations):
+SCREEN 0.1: Login Page
+Purpose: Authenticate users.
+Functions:
+Input email/username.
+Input password.
+"Forgot Password?" link.
+"Login" button.
+(Optional) SSO options (e.g., "Login with Google/Microsoft").
+Progression: On success, redirects to role-specific dashboard. On failure, shows error message.
+SCREEN 0.2: Forgot Password Page
+Purpose: Initiate password reset process.
+Functions:
+Input registered email address.
+"Send Reset Link" button.
+Progression: Shows confirmation message. User receives email.
+SCREEN 0.3: Reset Password Page (from email link)
+Purpose: Allow user to set a new password.
+Functions:
+Input new password (with strength indicator).
+Confirm new password.
+"Reset Password" button.
+Progression: On success, confirms password change and redirects to Login.
+SCREEN 0.4: User Profile & Settings Page
+Purpose: Allow users to manage their personal information and preferences.
+Tabs/Sections:
+Profile Information:
+View/Edit: Name, Email (view only, change via admin), Profile Picture, Role (view only).
+(Optional) Bio, LinkedIn Profile link.
+Account Security:
+"Change Password" option.
+(Future) Two-Factor Authentication setup.
+Notification Preferences:
+Checkboxes to enable/disable in-app and email notifications for various event types (e.g., task assignments, mentions, new reports).
+Connected Accounts (Integrations - View Only for most, Manage for Admin):
+Shows status of connected GitHub, Jira, Slack accounts.
+Functions: Save changes, navigate between tabs.
+Progression: Accessed from User Profile Icon in global navigation.
+SCREEN 0.5: Notification Panel/Page
+Purpose: Display a list of user-specific notifications.
+Functions:
+List notifications (chronological, with unread indicators).
+Mark as read/unread.
+Mark all as read.
+Click on a notification to navigate to the relevant item (e.g., a task, a comment).
+Filter notifications (All, Unread).
+Progression: Accessed from Notification Bell Icon.
+
+2. Role-Based Screens & Flows
+2.1 Intern / Engineer Role
+SCREEN IE.1: My Dashboard (Homepage)
+Purpose: Provide a personalized overview of skills, tasks, and relevant activity.
+Sections/Widgets:
+My Skill Snapshot: Mini skill radar chart or top 3 skills with recent progress (e.g., "React ↑ 10%"). Links to My Skills page.
+My Current Tasks: List of active tasks assigned from PMT (Jira) with status and due dates. Links to task details.
+Recent Activity/Mentions: Feed of recent PR reviews, comments mentioning the user, or important Slack mentions (if applicable and consented).
+Upcoming Deadlines: Quick view of tasks due soon.
+(Future) Career Path Suggestions: "Based on your skills, consider contributing to X project to learn Y."
+Functions: View summaries, click through to detailed pages.
+Progression: Landing page after login.
+SCREEN IE.2: My Skills Page
+Purpose: Detailed view of the engineer's skill profile and progression.
+Sections:
+Overall Skill Graph: Interactive radar chart or bar chart showing proficiency levels across various technical skills (e.g., Python, React, AWS, SQL).
+Skill Progression Timeline: Chart showing how specific skill scores have changed over time.
+Skills Breakdown Table:
+List of skills, current proficiency score, trend (up/down/stable).
+Evidence: Links to relevant commits, PRs, completed Jira tickets that contributed to the skill score.
+Functions: Filter by time period, hover over data points for details, click "evidence" to potentially open linked items in new tabs.
+Progression: Accessed from "My Skill Snapshot" on dashboard or main navigation.
+SCREEN IE.3: My Tasks Page
+Purpose: Comprehensive list of all tasks assigned to the engineer.
+Sections:
+Task list (filterable by status: To Do, In Progress, Done; sortable by due date, priority).
+Each task item shows: Task ID, Title, Project, Status, Due Date.
+Functions: View task details (potentially in a modal or separate page), link to the task in the source PMT (Jira).
+Progression: Accessed from "My Current Tasks" on dashboard or main navigation.
+SCREEN IE.4: Task Detail View (Modal or Page)
+Purpose: Show detailed information about a specific task.
+Sections: Displays all relevant info from Jira (Description, Reporter, Assignee, Priority, Comments, Linked Issues, Time Logged, etc.).
+Functions: Link to open task directly in Jira.
+Progression: Accessed by clicking a task from My Tasks or My Dashboard.
+SCREEN IE.5: My Projects Page
+Purpose: List projects the engineer is or has been involved in.
+Sections: List of projects with basic info (Name, Status, My Role/Contribution).
+Functions: Click to view Project Detail Page (see Team Lead section for project details).
+Progression: Accessed from main navigation.
+User Flows for Intern/Engineer:
+Flow IE-A: Check Daily Overview & Start Work
+Login (SCREEN 0.1) → My Dashboard (SCREEN IE.1).
+Review Skill Snapshot, Current Tasks, Recent Activity.
+Click on a task in "My Current Tasks" → Task Detail View (SCREEN IE.4) or directly to Jira.
+Flow IE-B: Review Skill Progression
+My Dashboard (SCREEN IE.1) → Click on Skill Snapshot or navigate via sidebar → My Skills Page (SCREEN IE.2).
+Analyze skill graph, progression timeline, and evidence for skill scores.
+Flow IE-C: Manage Profile Settings
+Any Authenticated Page → Click User Profile Icon → User Profile & Settings (SCREEN 0.4).
+Update information or notification preferences. Save.
+
+2.2 Team Lead / Manager Role
+SCREEN TL.1: Team Dashboard (Homepage)
+Purpose: Overview of team skills, performance, active issues, and project statuses.
+Sections/Widgets:
+Team Skill Matrix/Heatmap: Visual representation of team's collective skills and gaps. Links to Team Skills Page.
+Team Sentiment Overview: Aggregated sentiment trend (e.g., "Team sentiment: Neutral, slight downward trend"). Links to Sentiment Radar.
+Active Blockers/Risks: Summary of team members flagged for blockers or negative sentiment. Links to Sentiment Radar.
+Project Status Summary: Quick view of ongoing projects, their health (RAG status), and upcoming milestones. Links to Projects List.
+Task Allocation Hotspots: Highlights overloaded team members or critical unassigned tasks. Links to Task Allocation.
+Recent Team Retrospectives: Links to latest retrospective reports.
+Functions: View summaries, drill down to detailed pages.
+Progression: Landing page after login.
+SCREEN TL.2: Team Members Page
+Purpose: List team members and access their individual profiles and performance.
+Sections:
+List of team members (Name, Role, Key Skills summary).
+Functions:
+Click on a team member to view their detailed "Engineer Profile" (similar to SCREEN IE.1 & IE.2, but from a manager's perspective, possibly with more performance metrics).
+Filter/Sort team members.
+(Future) Initiate 1:1 meeting note or action.
+Progression: Accessed from main navigation or drill-down from Team Dashboard.
+SCREEN TL.3: Team Skills Page
+Purpose: In-depth view of the team's collective skills, strengths, and weaknesses.
+Sections:
+Aggregated Team Skill Graph: Combined skill proficiency across the team.
+Skill Distribution Table: Shows how many members possess a certain skill at different proficiency levels.
+Skill Gap Analysis: Compare team skills against required skills for upcoming projects.
+Functions: Filter by project, identify training needs for the team.
+Progression: Accessed from Team Dashboard or main navigation.
+SCREEN TL.4: Projects List Page
+Purpose: Manage and overview all projects relevant to the team.
+Sections: Table of projects (Name, Status, Start/End Date, Team Lead, % Complete, Health).
+Functions:
+Create New Project (if platform manages project entities itself, otherwise links to PMT).
+Click on a project to view Project Detail Page (SCREEN TL.5).
+Filter/Sort projects.
+Progression: Accessed from Team Dashboard or main navigation.
+SCREEN TL.5: Project Detail Page
+Purpose: Comprehensive view of a single project.
+Tabs/Sections:
+Overview: Project description, goals, key dates, status, assigned team members.
+Tasks: List of associated Jira tasks (filterable, sortable), progress.
+Skill Requirements: Defined skills needed for the project.
+Resource Allocation: View assigned team members and their capacity/load for this project.
+Retrospectives: List of retrospectives related to this project.
+Functions: Edit project details (if applicable), link to tasks in Jira, initiate Task Allocation for this project, generate Retrospective.
+Progression: Accessed from Projects List Page.
+SCREEN TL.6: Dynamic Task Allocation Page
+Purpose: AI-assisted assignment of tasks to team members.
+Sections:
+Panel 1: Unassigned Tasks/Project Needs: List of tasks (from Jira project) or defined project skill needs.
+Panel 2: Team Members & Availability: List of team members, their current workload, key skills, and skill gaps relevant to selected tasks/project.
+Panel 3: AI Recommendations: Suggested assignments with rationale (e.g., "Assign Task X to Intern A for Python skill growth, mentored by Senior B").
+Functions:
+Select project/tasks to allocate.
+View AI recommendations.
+Manually drag-and-drop tasks to team members OR accept AI suggestions.
+View impact of assignment on team member workload.
+Confirm assignments (which may update Jira).
+Progression: Accessed from Team Dashboard, Project Detail Page, or main navigation.
+SCREEN TL.7: Sentiment & Blockers Radar Page
+Purpose: Monitor team communication for sentiment issues and blockers.
+Sections:
+Overall Sentiment Trend Graph: Visualizing team sentiment over time.
+At-Risk Interns/Engineers List: Members flagged for persistent negative sentiment or frequent blockers.
+Each item shows: Member name, risk level, summary of recent concerning messages (anonymized snippets or keywords, with consent), suggested interventions.
+Recent Blocker Mentions: Feed of messages identified as blockers.
+Functions:
+Filter by time period, severity.
+Click on a flagged member to see more context (potentially link to anonymized message sources if ethically permissible and consented).
+Acknowledge alerts, log actions taken (e.g., "Scheduled 1:1").
+Progression: Accessed from Team Dashboard or main navigation.
+SCREEN TL.8: Retrospectives Page
+Purpose: View and generate automated sprint/project retrospectives.
+Sections:
+List of previously generated retrospectives (Title, Date, Project/Sprint).
+"Generate New Retrospective" button.
+Functions:
+Click to view a specific Retrospective Report (SCREEN TL.9).
+Initiate generation of a new retrospective (select project/sprint, time period).
+Progression: Accessed from Team Dashboard, Project Detail Page, or main navigation.
+SCREEN TL.9: Retrospective Report View
+Purpose: Display the content of an auto-generated retrospective.
+Sections:
+Report Metadata: Project/Sprint, Date Range, Team.
+Summary: Key achievements, challenges encountered.
+Performance Metrics: PR review speed changes, velocity, features delivered.
+Skill Insights: Observed skill gaps, suggested training needs.
+Sentiment Trends: Summary of team sentiment during the period.
+Action Items (Future): Allow adding/tracking action items.
+Functions: Export report (PDF, Markdown).
+Progression: Accessed from Retrospectives Page.
+User Flows for Team Lead/Manager:
+Flow TL-A: Morning Check-in & Issue Spotting
+Login (SCREEN 0.1) → Team Dashboard (SCREEN TL.1).
+Review Team Sentiment, Active Blockers.
+If issues noted, click to Sentiment & Blockers Radar (SCREEN TL.7) → Investigate flagged members/messages → Log action or schedule follow-up.
+Flow TL-B: Allocate Tasks for a New Sprint/Project
+Team Dashboard (SCREEN TL.1) or Projects List (SCREEN TL.4) → Select Project → Project Detail Page (SCREEN TL.5).
+From Project Detail, navigate to Task Allocation (SCREEN TL.6).
+Define needs or select unassigned tasks. Review AI recommendations and team member availability.
+Assign tasks. Confirm.
+Flow TL-C: Conduct a Sprint Retrospective
+Retrospectives Page (SCREEN TL.8) → Click "Generate New Retrospective."
+Select relevant project/sprint and date range. Confirm.
+System generates report. View Retrospective Report (SCREEN TL.9).
+Discuss with team, export report.
+
+2.3 HR Personnel Role
+SCREEN HR.1: Talent Overview Dashboard (Homepage)
+Purpose: High-level view of organizational talent, skills, and potential risks.
+Sections/Widgets:
+Org-Wide Skill Landscape: Distribution of key skills across the company/departments.
+Attrition Risk Summary: Number of employees flagged as high attrition risk, trends. Links to Attrition Risk Monitor.
+Promotion Pipeline Snapshot: Number of employees identified as ready for promotion. Links to Promotion Pipeline.
+Diversity & Inclusion Metrics (Future): If data is available and tracked.
+Training Impact Overview (Future): Correlation of training with skill growth.
+Functions: View summaries, filter by department/role, drill down to detailed pages.
+Progression: Landing page after login.
+SCREEN HR.2: Employee Profiles Page
+Purpose: Search, view, and analyze detailed profiles of employees.
+Sections:
+Search/Filter bar (by name, department, role, skills, attrition risk).
+List of employees.
+Clicking an employee opens a detailed profile view:
+Similar to Team Lead's view of an engineer but with HR focus: skill history, performance trends (objective data), sentiment analysis summaries, contribution highlights, career path suggestions from system, training history.
+Functions: Search, filter, view individual profiles, flag for follow-up, add HR-specific notes (confidential).
+Progression: Accessed from main navigation or drill-down from dashboard.
+SCREEN HR.3: Attrition Risk Monitor Page
+Purpose: Proactively identify and manage employees at risk of leaving.
+Sections:
+List of employees flagged with high attrition risk scores.
+Each item shows: Employee Name, Department, Role, Risk Score, Key Contributing Factors (e.g., declining productivity, negative sentiment, lack of challenging tasks).
+Functions:
+Filter/Sort by risk score, department.
+Click on an employee to view detailed evidence and profile.
+Log interventions or notes (e.g., "Met with manager," "Offered training opportunity").
+Progression: Accessed from Talent Overview Dashboard or main navigation.
+SCREEN HR.4: Promotion Pipeline Page
+Purpose: Identify and track employees suitable for promotion based on objective data.
+Sections:
+List of employees flagged by the system as potential promotion candidates.
+Each item shows: Employee Name, Current Role, Suggested Next Role (if applicable), Supporting Data (e.g., "Top 10% in code reviews," "Mentored 5 interns," "Consistent high performance & positive sentiment").
+Functions:
+Filter by department, current role.
+View detailed supporting data for each candidate.
+Add HR notes, track progress through promotion process.
+(Future) Compare candidates.
+Progression: Accessed from Talent Overview Dashboard or main navigation.
+SCREEN HR.5: Compliance & Audits Reporting Page
+Purpose: Generate reports for compliance and performance management.
+Sections:
+Report generation interface: Select report type (e.g., "Productivity Proof," "Training Effectiveness," "Skill Distribution").
+Input parameters (date range, department, employee group).
+Functions: Generate report, view report, export report (PDF, CSV).
+Example: "Proof of productivity" report for a specific employee during a dispute, showing code review scores, task completion rates, etc.
+Progression: Accessed from main navigation.
+User Flows for HR Personnel:
+Flow HR-A: Monitor Attrition Risk
+Login (SCREEN 0.1) → Talent Overview Dashboard (SCREEN HR.1).
+Review Attrition Risk Summary. Click to Attrition Risk Monitor (SCREEN HR.3).
+Review list of at-risk employees. Click on an individual for details.
+Analyze contributing factors. Log any interventions or discussions.
+Flow HR-B: Identify Promotion Candidates
+Login (SCREEN 0.1) → Talent Overview Dashboard (SCREEN HR.1).
+Review Promotion Pipeline Snapshot. Click to Promotion Pipeline Page (SCREEN HR.4).
+Review candidates and supporting data. Add notes or flag for manager discussion.
+Flow HR-C: Generate a Performance Report for an Employee
+Navigate to Compliance & Audits Reporting (SCREEN HR.5).
+Select "Proof of Productivity" report type.
+Specify employee and date range. Generate and export report.
+
+2.4 Recruiter Role
+SCREEN R.1: Candidate Search Dashboard (Homepage)
+Purpose: Find and evaluate potential candidates based on verified skills.
+Sections/Widgets:
+Advanced Search Filters: Search by skills (e.g., "Python > 7/10 proficiency," "AWS experience"), years of experience (derived), keywords from project descriptions (if WorkCart-like public profiles exist).
+Saved Searches.
+Recently Viewed Candidates.
+Hot Candidates List (Future): AI-suggested candidates matching active roles.
+Functions: Define search criteria, execute search, view search results.
+Progression: Landing page after login.
+SCREEN R.2: Candidate Search Results Page
+Purpose: Display list of candidates matching search criteria.
+Sections: List of candidate cards/rows, each showing: Name, Key Skills (verified scores), Brief Summary/Title.
+Functions:
+Click on a candidate to view Verified Candidate Profile (SCREEN R.3).
+Sort results (by relevance, skill match).
+Shortlist candidates.
+Progression: Appears after a search on SCREEN R.1.
+SCREEN R.3: Verified Candidate Profile Page (Public "WorkCart" View)
+Purpose: Display a data-driven profile of a candidate (assuming candidates opt-in to share this via a public WorkCart-like system integrated or parallel to TeamIQ).
+Sections:
+Candidate Name, Headline, Contact Info (if shared).
+Verified Skill Graph: Similar to SCREEN IE.2, but based on publicly available data (e.g., open-source contributions) or data explicitly shared by the candidate.
+Project Showcase: Examples of projects with descriptions, technologies used (verified where possible).
+Contribution Timeline: Highlights of activity.
+(Future) Peer Endorsements/Reviews: Verified through platform if possible.
+Functions: Review candidate's skills and experience, compare with job requirements, add to shortlist, contact candidate (if info available), add internal notes.
+Progression: Accessed from Candidate Search Results.
+SCREEN R.4: Shortlisted Candidates Page
+Purpose: Manage candidates the recruiter is interested in.
+Sections: List of shortlisted candidates.
+Functions: View profiles, add notes, change status (e.g., "Contacted," "Interviewing"), remove from shortlist.
+Progression: Accessed from main navigation.
+User Flows for Recruiter:
+Flow R-A: Search for Candidates with Specific Skills
+Login (SCREEN 0.1) → Candidate Search Dashboard (SCREEN R.1).
+Input desired skills and other criteria. Execute search.
+View Candidate Search Results (SCREEN R.2).
+Click on promising candidates to view Verified Candidate Profile (SCREEN R.3).
+Shortlist candidates of interest.
+Flow R-B: Review Shortlisted Candidates
+Navigate to Shortlisted Candidates Page (SCREEN R.4).
+Review profiles, update statuses, add notes for follow-up.
+
+2.5 Bootcamp Admin Role
+SCREEN BA.1: Cohort Dashboard (Homepage)
+Purpose: Overview of current and past student cohorts' progress and skill development.
+Sections/Widgets:
+Active Cohorts List: With key stats (number of students, average skill progression, overall sentiment if tracked).
+Overall Skill Development Trends: Across all cohorts or selected ones.
+Job Placement Readiness Metrics: (e.g., % of students meeting target skill levels).
+Functions: View summaries, drill down to specific cohort details.
+Progression: Landing page after login.
+SCREEN BA.2: Cohort Detail Page
+Purpose: In-depth view of a specific student cohort.
+Sections:
+Cohort Information: Name, Start/End Dates, Instructors.
+Student List: All students in the cohort. Clicking a student opens their Student Profile (SCREEN BA.3).
+Aggregated Skill Matrix for Cohort: Similar to team skill matrix.
+Overall Progress & Productivity Metrics for Cohort.
+Functions: View student list, track overall cohort performance, identify common skill gaps.
+Progression: Accessed from Cohort Dashboard.
+SCREEN BA.3: Student Profile Page
+Purpose: View an individual student's progress, skills, and project work.
+Sections: (Similar to Intern/Engineer's "My Skills" and "My Tasks/Projects" pages)
+Student Skill Graph & Progression.
+List of completed projects/assignments with links to work (e.g., GitHub repos).
+Productivity metrics (task completion, contribution frequency).
+(If applicable) Sentiment/Engagement metrics.
+Functions: Monitor individual student performance, identify students needing extra help, generate individual progress reports for employers (with consent).
+Progression: Accessed from Cohort Detail Page.
+SCREEN BA.4: Reporting Page
+Purpose: Generate reports on cohort performance and student readiness.
+Functions:
+Generate Cohort Performance Reports.
+Generate Individual Student "Job Readiness" Reports (exportable, to be shared with potential employers with student consent).
+Progression: Accessed from main navigation.
+User Flows for Bootcamp Admin:
+Flow BA-A: Monitor Cohort Progress
+Login (SCREEN 0.1) → Cohort Dashboard (SCREEN BA.1).
+Select an active cohort → Cohort Detail Page (SCREEN BA.2).
+Review overall cohort skills and student list. Click on individual students to view Student Profile (SCREEN BA.3) for detailed progress.
+Flow BA-B: Generate Reports for Employers
+Navigate to Reporting Page (SCREEN BA.4).
+Select students and generate "Job Readiness Reports."
+
+2.6 System Administrator Role
+SCREEN SA.1: Admin Dashboard (Homepage)
+Purpose: Overview of system health, usage, and critical administrative tasks.
+Sections/Widgets:
+System Health Status: (DB connection, API integrations status, server load).
+Active Users Count / Recent Logins.
+Integration Status Overview: Green/Yellow/Red status for GitHub, Jira, Slack integrations.
+Error Log Summary: Quick view of recent critical errors.
+License Usage Information.
+Functions: View summaries, navigate to detailed management pages.
+Progression: Landing page after login.
+SCREEN SA.2: User Management Page
+Purpose: Manage all user accounts in the system.
+Sections: List of users (Name, Email, Role, Status - Active/Inactive, Last Login).
+Functions:
+Add New User (input details, assign role).
+Edit User (change role, personal details - not password).
+Deactivate/Reactivate User.
+Reset User Password (send reset link).
+Filter/Search users.
+Progression: Accessed from Admin Dashboard or main navigation (Admin Panel).
+SCREEN SA.3: Integration Management Page
+Purpose: Configure and manage API integrations with third-party services.
+Sections: List of supported integrations (GitHub, Jira, Slack, etc.).
+For each integration: Status (Connected/Disconnected), configuration options (API keys, OAuth setup, webhook URLs).
+Functions:
+Add/Edit integration configurations (securely input API keys, URLs).
+Test connection for each integration.
+Enable/Disable specific integrations for the tenant/instance.
+View sync logs/status for each integration.
+Progression: Accessed from Admin Dashboard or main navigation.
+SCREEN SA.4: System Settings Page
+Purpose: Configure global system parameters.
+Tabs/Sections:
+General Settings: (Application name, default timezone).
+Notification Settings: (Default email sender, templates - future).
+AI Model Settings (Basic): (Potentially, configurable weights for skill scoring, sentiment thresholds - for advanced admins).
+Data Retention Policies: (Configure how long raw data vs. analytical data is kept).
+Security Settings: (Password policies, session timeout).
+Functions: View and modify system configurations. Save changes.
+Progression: Accessed from Admin Dashboard or main navigation.
+SCREEN SA.5: Audit Logs Page
+Purpose: View a log of critical system and user actions for security and troubleshooting.
+Sections: Table of log entries (Timestamp, User, Action, Details, IP Address).
+Functions: Filter logs (by user, date range, action type), export logs.
+Progression: Accessed from Admin Dashboard or main navigation.
+SCREEN SA.6: License Management Page
+Purpose: View and manage the software license for the instance (if applicable for enterprise/on-prem).
+Sections: Current license details (type, expiry, user limits), usage against limits.
+Functions: Upload new license key (if applicable).
+Progression: Accessed from Admin Dashboard or main navigation.
+User Flows for System Administrator:
+Flow SA-A: Add a New User
+Login (SCREEN 0.1) → Admin Dashboard (SCREEN SA.1).
+Navigate to User Management (SCREEN SA.2).
+Click "Add New User." Fill in details, assign role. Save.
+Flow SA-B: Configure a New Jira Integration
+Admin Dashboard (SCREEN SA.1) → Navigate to Integration Management (SCREEN SA.3).
+Select "Jira." Input Jira instance URL, API token, and other required settings.
+Test connection. Save configuration.
+Flow SA-C: Investigate a System Issue
+Admin Dashboard (SCREEN SA.1) → Review Error Log Summary or System Health.
+Navigate to Audit Logs (SCREEN SA.5) or specific integration logs to find more details.
+
+This is a potential screens and flows. For an MVP, 
+	Common Screens (0.1 - 0.4)
+Intern/Engineer (IE.1, IE.2) - for data generation and basic user value.
+Team Lead (TL.1, TL.2, TL.6, TL.7) - for core team intelligence and task allocation.
+System Admin (SA.1, SA.2, SA.3) - for basic setup and user management.
+The AI components would initially be simpler, with sophistication added iteratively. Data visualization (D3.js/Plotly) would be crucial from the start for the analytics dashboards.

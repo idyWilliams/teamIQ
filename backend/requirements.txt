@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-dotenv
+SQLAlchemy
+psycopg2-binary
+passlib
+python-jose
+bcrypt
+pydantic[email]
+pydantic-settings
+python-multipart
+PyJWT
+openai
+slack_sdk
+requests
