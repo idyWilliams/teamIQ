@@ -1,13 +1,14 @@
+import { User } from '../types';
 import { api } from './api';
-import { AuthUser, LoginCredentials } from '../../shared/types';
+
 
 const TOKEN_KEY = 'auth_token';
 
 export const authService = {
-  async login(username: string, password: string): Promise<{ access_token: string; user: AuthUser }> {
+  async login(username: string, password: string): Promise<{ access_token: string; user: User }> {
     const response = await api.post('/auth/login', { username, password });
     const { access_token, user } = response.data;
-    
+
     this.setToken(access_token);
     return { access_token, user };
   },
@@ -20,15 +21,15 @@ export const authService = {
     }
   },
 
-  async getCurrentUser(): Promise<AuthUser> {
+  async getCurrentUser(): Promise<User> {
     const response = await api.get('/auth/me');
     return response.data;
   },
 
-  async refreshToken(): Promise<{ access_token: string; user: AuthUser }> {
+  async refreshToken(): Promise<{ access_token: string; user: User }> {
     const response = await api.post('/auth/refresh');
     const { access_token, user } = response.data;
-    
+
     this.setToken(access_token);
     return { access_token, user };
   },
@@ -39,9 +40,9 @@ export const authService = {
   },
 
   async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
-    const response = await api.post('/auth/reset-password', { 
-      token, 
-      new_password: newPassword 
+    const response = await api.post('/auth/reset-password', {
+      token,
+      new_password: newPassword
     });
     return response.data;
   },

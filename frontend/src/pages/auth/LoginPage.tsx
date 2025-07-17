@@ -1,14 +1,15 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { Shield } from "lucide-react";
-import { useAuth } from "../../contexts/AuthContext";
+
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import LoginForm from "../../components/Auth/LoginForm";
+import { useAuth } from "../../hooks/useAuth";
 
 const LoginPage: React.FC = () => {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <LoadingSpinner size="lg" />

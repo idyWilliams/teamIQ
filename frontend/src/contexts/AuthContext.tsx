@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               updated_at: '',
             })
           }
-          
+
           // Then fetch full user data
           await refreshUser()
         }
@@ -73,12 +73,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setLoading(true)
       const response = await authApi.login(credentials)
       const authData: AuthResponse = response.data
-      
+
       setToken(authData.access_token)
       setUser(authData.user)
-      
+
       toast.success('Welcome back!')
-      
+
       // Navigate to appropriate dashboard based on role
       const dashboardRoute = getDashboardRoute(authData.user.role)
       navigate(dashboardRoute)
@@ -95,12 +95,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setLoading(true)
       const response = await authApi.register(userData)
       const authData: AuthResponse = response.data
-      
+
       setToken(authData.access_token)
       setUser(authData.user)
-      
+
       toast.success('Account created successfully!')
-      
+
       // Navigate to appropriate dashboard based on role
       const dashboardRoute = getDashboardRoute(authData.user.role)
       navigate(dashboardRoute)
@@ -129,7 +129,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
-  const getDashboardRoute = (role: string): string => {
+   const getDashboardRoute = (role: string): string => {
     switch (role) {
       case 'intern':
       case 'engineer':

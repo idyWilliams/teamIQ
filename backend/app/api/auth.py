@@ -8,7 +8,7 @@ from pydantic import BaseModel, EmailStr
 from app.core.database import get_db
 from app.core.security import verify_password, get_password_hash, create_access_token
 from app.core.config import settings
-from app.models.user import User
+from app.models.user import User, UserRole
 from app.schemas.auth import LoginRequest, TokenResponse, ForgotPasswordRequest, ResetPasswordRequest, ChangePasswordRequest
 from app.schemas.user import UserResponse
 from app.services.auth_service import AuthService
@@ -21,7 +21,6 @@ class RegisterData(BaseModel):
     email: EmailStr
     password: str
     full_name: Optional[str] = None
-    role: str
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
@@ -165,20 +164,13 @@ async def register_new_user(
         username=user_data.username,
         full_name=user_data.full_name,
         hashed_password=hashed_password,
-        role=user_data.role,
+        role=UserRole.INTERN,
         is_active=True,  # New users are active by default
     )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
-    return UserResponse(
-        id=db_user.id,
-        username=db_user.username,
-        email=db_user.email,
-        full_name=db_user.full_name,
-        role=db_user.role.value,  # For Enum fields, adjust as needed
-        is_active=db_user.is_active,
-    )
+    return db_user
 
 @router.post("/logout")
 async def logout():
